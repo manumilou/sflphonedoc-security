@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing and configuring a basic Asterisk server &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Setup a secure environment with Asterisk" href="index.html" />
+    <link rel="next" title="Configuring Asterisk encryption" href="configureasteriskencryption.html" />
+    <link rel="prev" title="Setup a secure environment with Asterisk" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configureasteriskencryption.html" title="Configuring Asterisk encryption"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Setup a secure environment with Asterisk"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-and-configuring-a-basic-asterisk-server">
+<span id="installingasterisk"></span><h1>Installing and configuring a basic Asterisk server<a class="headerlink" href="#installing-and-configuring-a-basic-asterisk-server" title="Permalink to this headline">¶</a></h1>
+<p><strong>Prerequisites:</strong>  an Ubuntu server or virtual machine</p>
+<p><strong>Outcome:</strong> a basic SIP server with 2 accounts</p>
+<p>Install Asterisk with apt-get:</p>
+<div class="highlight-python"><pre>sudo su
+apt-get install asterisk</pre>
+</div>
+<p>It will ask you for a country code, you can check <a class="reference external" href="http://countrycode.org/">http://countrycode.org/</a> to get yours. You can check if Asterisk is operational using:</p>
+<div class="highlight-python"><pre>service asterisk status</pre>
+</div>
+<a class="reference internal image-reference" href="../_images/asterisk1.png"><img alt="../_images/asterisk1.png" src="../_images/asterisk1.png" style="width: 625.5px; height: 240.75px;" /></a>
+<div class="section" id="add-some-sip-accounts">
+<h2>Add some SIP accounts<a class="headerlink" href="#add-some-sip-accounts" title="Permalink to this headline">¶</a></h2>
+<p>Now, using your favourite text editor, make a backup of /etc/asterisk/sip.conf and replace it with:</p>
+<div class="highlight-python"><pre>[general]
+context=internal
+allowguest=no
+allowoverlap=no
+bindport=5060
+bindaddr=0.0.0.0
+srvlookup=no
+disallow=all
+allow=ulaw
+allow=g722
+allow=alaw
+allow=gsm
+alwaysauthreject=yes
+canreinvite=no
+session-timers=refuse
+localnet=192.168.1.0/255.255.255.0
+
+[666]
+callerid=anonymous
+type=friend
+host=dynamic
+secret=123
+context=internal
+
+[777]
+type=friend
+host=dynamic
+secret=456
+context=internal</pre>
+</div>
+<p>Be sure to update &#8220;localnet&#8221; to match your network settings.
+Run ifconfig to check your public IP address:</p>
+<a class="reference internal image-reference" href="../_images/asterisk2.png"><img alt="../_images/asterisk2.png" src="../_images/asterisk2.png" style="width: 624.75px; height: 206.25px;" /></a>
+<p>To apply the settings, execute &#8220;rasterisk&#8221; and type:</p>
+<div class="highlight-python"><pre>sip set debug on
+sip reload</pre>
+</div>
+<p>To confirm the new diaplan, run:</p>
+<div class="highlight-python"><pre>sip show users</pre>
+</div>
+<a class="reference internal image-reference" href="../_images/asterisk3.png"><img alt="../_images/asterisk3.png" src="../_images/asterisk3.png" style="width: 744.75px; height: 229.5px;" /></a>
+<p>Now, setup a new dialplan to be able to call other users. Edit /etc/asterisk/extensions.conf and add:</p>
+<div class="highlight-python"><pre>[users]
+include =&gt; default
+include =&gt; trunklocal
+include =&gt; iaxtel700
+include =&gt; trunktollfree
+include =&gt; iaxprovider
+exten =&gt; 777,n,Dial(SIP/777,777,Tt)
+
+[internal]
+exten =&gt; _XXX,1,Dial(SIP/${EXTEN})</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing and configuring a basic Asterisk server</a><ul>
+<li><a class="reference internal" href="#add-some-sip-accounts">Add some SIP accounts</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Setup a secure environment with Asterisk</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configureasteriskencryption.html"
+                        title="next chapter">Configuring Asterisk encryption</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02_asterisksflphone/installingasterisk.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configureasteriskencryption.html" title="Configuring Asterisk encryption"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Setup a secure environment with Asterisk"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

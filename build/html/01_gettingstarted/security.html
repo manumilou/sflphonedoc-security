@@ -1,0 +1,111 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SIP security basics &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Getting started" href="index.html" />
+    <link rel="prev" title="Configuring an existing account" href="existingaccountconfiguration.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="existingaccountconfiguration.html" title="Configuring an existing account"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sip-security-basics">
+<span id="security"></span><h1>SIP security basics<a class="headerlink" href="#sip-security-basics" title="Permalink to this headline">¶</a></h1>
+<p>The first thing to know about SIP security is that there is usually none at all. i
+By default, everything is transmitted unencrypted and readable by any software that can grab traffic between you and your peer. If you are using proxies along the way, each of them may decide to ignore certain security options.
+The second important detail to retain is that SIP security alone (SIPS, SIP-TLS) does not encrypt your communications. SIPS only encrypts the handshake between both peers. To encrypt the media stream (aka, voice) itself, you also need to enable Secure RTP (aka, SRTP).
+Likewise, only having SRTP enabled may encrypt your audio but will not obscure information about the call itself (i.e. participants, IP addresses, etc.).</p>
+<p>Most registrar and SIP servers have some level of support for security, however, all implementations are not created equal. As of Asterisk 1.8 (the default in many server operating systems), some security options are not as well supported as they should be. For a safer system, Freeswitch is the best free software option. Asterisk also needs to be recompiled to enable SRTP (see <a class="reference external" href="https://projects.savoirfairelinux.com/projects/sflphone/wiki/Security">https://projects.savoirfairelinux.com/projects/sflphone/wiki/Security</a> ). This, in turn, will force you to manually update your SIP server everytime a security patch is available, introducing security vulnerabilities of its own.</p>
+<p>TODO show security options here</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="existingaccountconfiguration.html"
+                        title="previous chapter">Configuring an existing account</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/01_gettingstarted/security.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="existingaccountconfiguration.html" title="Configuring an existing account"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

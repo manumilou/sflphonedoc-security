@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing Freeswitch &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Setup a secure environment with Freeswitch" href="index.html" />
+    <link rel="next" title="Configuring Freeswitch security" href="configurefreeswitchencryption.html" />
+    <link rel="prev" title="Setup a secure environment with Freeswitch" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configurefreeswitchencryption.html" title="Configuring Freeswitch security"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Setup a secure environment with Freeswitch"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Setup a secure environment with Freeswitch</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-freeswitch">
+<span id="installingfreeswitch"></span><h1>Installing Freeswitch<a class="headerlink" href="#installing-freeswitch" title="Permalink to this headline">¶</a></h1>
+<p>Please see the <a class="reference external" href="http://wiki.freeswitch.org/wiki/Ubuntu_Quick_Start">Ubuntu Quick Start Guide</a> for an official guide to installing Freeswitch.</p>
+<p>Otherwise, to install the latest FreeSwitch from git, run the following commands:</p>
+<div class="highlight-python"><pre># Install all dependencies
+sudo su -
+
+apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev make libjpeg-dev pkg-config unixodbc unixodbc-dev zlib1g-dev libcurl4-openssl-dev libexpat1-dev libssl-dev libtiff4-dev libx11-dev unixodbc-dev python2.7-dev zlib1g-dev libzrtpcpp-dev libasound2-dev libogg-dev libvorbis-dev libperl-dev libgdbm-dev libdb-dev python-dev uuid-dev bison autoconf g++ libncurses-dev
+
+
+# Download FreeSwitch
+mkdir -p /usr/local/src
+cd /usr/local/src
+
+git clone git://git.freeswitch.org/freeswitch.git
+cd freeswitch
+
+# Build
+./bootstrap.sh
+./configure
+make
+# You may have to call "make" a few times before it works.
+
+# Install in /usr/local
+make all install cd-sounds-install cd-moh-install</pre>
+</div>
+<p>Reference: <a class="reference external" href="http://wiki.freeswitch.org/wiki/Linux_Quick_Install_Guide">http://wiki.freeswitch.org/wiki/Linux_Quick_Install_Guide</a> to install FreeSwitch (install all optional packages).</p>
+<a class="reference internal image-reference" href="../_images/freeswitch1.png"><img alt="../_images/freeswitch1.png" src="../_images/freeswitch1.png" style="width: 625.5px; height: 630.75px;" /></a>
+<p>Now, it is time to see if freeswitch is properly loaded.
+If you already have sflphone on the same computer, make sure to close it first.</p>
+<div class="highlight-python"><pre>/usr/local/freeswitch/bin/freeswitch</pre>
+</div>
+<p>After a few seconds, a shell will appear. To test if SIP is ready, enter:</p>
+<div class="highlight-python"><pre>sofia status profile internal</pre>
+</div>
+<p>This should display something like:</p>
+<blockquote>
+<div><p>Name internal</p>
+<p>Domain Name N/A</p>
+<p>Auto-NAT false</p>
+<p>DBName sofia_reg_internal</p>
+<p>Pres Hosts 192.168.48.185,192.168.48.185</p>
+<p>Dialplan XML</p>
+<p>Context public</p>
+<p>Challenge Realm auto_from</p>
+<p>RTP-IP 192.168.48.185</p>
+<p>SIP-IP 192.168.48.185</p>
+<p>URL <a class="reference external" href="sip:mod_sofia&#64;192.168.48.185:5060">sip:mod_sofia&#64;192.168.48.185:5060</a></p>
+<p>BIND-URL <a class="reference external" href="sip:mod_sofia&#64;192.168.48.185:5060;transport=udp,tcp">sip:mod_sofia&#64;192.168.48.185:5060;transport=udp,tcp</a></p>
+<p>HOLD-MUSIC local_stream://moh</p>
+<p>OUTBOUND-PROXY N/A</p>
+<p>CODECS IN G722,PCMU,PCMA,GSM</p>
+<p>CODECS OUT G722,PCMU,PCMA,GSM</p>
+<p>TEL-EVENT 101</p>
+<p>DTMF-MODE rfc2833</p>
+<p>CNG 13</p>
+<p>SESSION-TO 0</p>
+<p>MAX-DIALOG 0</p>
+<p>NOMEDIA false</p>
+<p>LATE-NEG true</p>
+<p>PROXY-MEDIA false</p>
+<p>ZRTP-PASSTHRU true</p>
+<p>AGGRESSIVENAT false</p>
+<p>CALLS-IN 0</p>
+<p>FAILED-CALLS-IN 0</p>
+<p>CALLS-OUT 0</p>
+<p>FAILED-CALLS-OUT 0</p>
+<p>REGISTRATIONS 1</p>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Setup a secure environment with Freeswitch</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configurefreeswitchencryption.html"
+                        title="next chapter">Configuring Freeswitch security</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03_freeswitchsflphone/installingfreeswitch.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configurefreeswitchencryption.html" title="Configuring Freeswitch security"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Setup a secure environment with Freeswitch"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Setup a secure environment with Freeswitch</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

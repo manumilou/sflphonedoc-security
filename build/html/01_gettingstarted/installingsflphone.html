@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing SFLphone &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Getting started" href="index.html" />
+    <link rel="next" title="Configuring an existing account" href="existingaccountconfiguration.html" />
+    <link rel="prev" title="Getting started" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="existingaccountconfiguration.html" title="Configuring an existing account"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-sflphone">
+<span id="installingsflphone"></span><h1>Installing SFLphone<a class="headerlink" href="#installing-sflphone" title="Permalink to this headline">¶</a></h1>
+<p>First, you need to add the official SFLphone PPA. This allows us to push new versions for older distributions.
+This step is not mandatory as Ubuntu provides SFLphone packages in its “universe” repository.</p>
+<div class="section" id="solution-1-software-center">
+<h2>Solution 1: Software Center<a class="headerlink" href="#solution-1-software-center" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Open Software Center (in Unity, press the “Windows” key and type “software center”)</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/softwarecenter0.png"><img alt="../_images/softwarecenter0.png" src="../_images/softwarecenter0.png" style="width: 833.25px; height: 577.5px;" /></a>
+<ul class="simple">
+<li>In Edit-&gt;Software sources, select the “Other software” tab</li>
+<li>Click add and enter “ppa:savoirfairelinux”</li>
+<li>Click close</li>
+<li>Click the little arrow next to &#8220;All Software&#8221; and select sflphone</li>
+<li>Select &#8220;GNOME client for SFLphone&#8221; and click install</li>
+</ul>
+</div>
+<div class="section" id="solution-2-command-line">
+<h2>Solution 2: Command-line<a class="headerlink" href="#solution-2-command-line" title="Permalink to this headline">¶</a></h2>
+<p>Add the repository to your software sources:</p>
+<div class="highlight-python"><pre>sudo add-apt-repository ppa:savoirfairelinux</pre>
+</div>
+<p>Now, update the package list:</p>
+<div class="highlight-python"><pre>sudo apt-get update</pre>
+</div>
+<p>You can now install the latest SFLphone version:
+sudo apt-get install sflphone-client-gnome</p>
+</div>
+<div class="section" id="solution-3-building-from-sources-not-recommended">
+<h2>Solution 3: Building from sources (not recommended)<a class="headerlink" href="#solution-3-building-from-sources-not-recommended" title="Permalink to this headline">¶</a></h2>
+<p>Please refer to the instructions at <a class="reference external" href="https://projects.savoirfairelinux.com/projects/sflphone/wiki/How_to_build">https://projects.savoirfairelinux.com/projects/sflphone/wiki/How_to_build</a> to build SFLphone from source.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing SFLphone</a><ul>
+<li><a class="reference internal" href="#solution-1-software-center">Solution 1: Software Center</a></li>
+<li><a class="reference internal" href="#solution-2-command-line">Solution 2: Command-line</a></li>
+<li><a class="reference internal" href="#solution-3-building-from-sources-not-recommended">Solution 3: Building from sources (not recommended)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Getting started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="existingaccountconfiguration.html"
+                        title="next chapter">Configuring an existing account</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/01_gettingstarted/installingsflphone.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="existingaccountconfiguration.html" title="Configuring an existing account"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

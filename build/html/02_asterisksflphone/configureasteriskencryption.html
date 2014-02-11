@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring Asterisk encryption &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Setup a secure environment with Asterisk" href="index.html" />
+    <link rel="prev" title="Installing and configuring a basic Asterisk server" href="installingasterisk.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installingasterisk.html" title="Installing and configuring a basic Asterisk server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring-asterisk-encryption">
+<span id="configuringasteriskencryption"></span><h1>Configuring Asterisk encryption<a class="headerlink" href="#configuring-asterisk-encryption" title="Permalink to this headline">¶</a></h1>
+<p>In this part, we will use TLS to encrypt the streams.</p>
+<div class="highlight-python"><pre>sudo su -
+apt-get install openssl
+mkdir /etc/certs
+cd /etc/certs/
+wget https://raw.github.com/rillian/asterisk-opus/master/contrib/scripts/ast_tls_cert
+sh ast_tls_cert -C pbx.MyHostName -O "NSA proof(?) server" -d /etc/certs/
+#Now fill out the form.
+sh ast_tls_cert -m client -c /etc/certs/ca.crt -k /etc/certs/ca.key -C mynsauser.MyHostName -O "NSA proof(?) server" -d /etc/certs -o mynsauser
+chown asterisk:asterisk ./ -R
+ls</pre>
+</div>
+<p>Now, let&#8217;s take a step back. This howto has assumed the same computer as server and client for simplicity&#8217;s sake. In a real-world context, this will rarely be the case. So you will have to safely upload the certificates to the client computer. To do this, the &#8220;scp&#8221; command allows you to upload the key over an encrypted connection. In our case, you can simply copy them using &#8220;cp&#8221; as it doesn&#8217;t change anything.</p>
+<div class="highlight-python"><pre>scp mynsauser.pem username@hostname:/tmp/
+scp ca.crt username@hostname:/tmp/</pre>
+</div>
+<p>Now, Asterisk need to be configured to use this certificate for encrypted calls. Backup your current /etc/asterisk/sip.conf, then open sip.conf and replace its contents with:</p>
+<div class="highlight-python"><pre>[general]
+context=internal
+allowguest=no
+allowsubscribe=yes
+allowoverlap=no
+bindport=5060
+bindaddr=0.0.0.0      ;192.168.48.213
+tlsbindaddr=0.0.0.0   ;192.168.48.213
+srvlookup=no
+disallow=all
+allow=ulaw
+allow=g722
+allow=alaw
+allow=gsm
+alwaysauthreject=yes
+canreinvite=no
+;nat=yes
+session-timers=refuse
+localnet=192.168.48.0/255.255.252.0
+tlsenable=yes
+tlscertfile=/etc/certs/asterisk.pem
+tlscafile=/etc/certs/ca.crt
+tlscipher=TLSv1
+;tlsclientmethod=tlsv1
+tlsdontverifyserver=no
+tlsbindaddr=0.0.0.0
+
+[777]
+callerid=NSA
+type=friend
+secret=nsa
+host=dynamic
+transport=tls
+port=5061
+context=internal
+dtmfmode=rfc2833
+insecure = invite,port
+nat = yes
+
+[888]
+callerid=NSA
+type=friend
+secret=nsa
+host=dynamic
+transport=tls
+port=5061
+context=internal
+dtmfmode=rfc2833
+insecure = invite,port
+nat = yes
+
+[999]
+callerid=PLAY
+type=friend
+secret=play
+host=dynamic
+transport=tls
+port=5061
+context=local
+dtmfmode=rfc2833
+;insecure = invite,port
+nat = yes</pre>
+</div>
+<p>And in extensions.conf, in the &#8220;[local]&#8221; section, add:</p>
+<div class="highlight-python"><pre>exten =&gt; 999,1,Answer
+exten =&gt; 999,2,Playback(tt-weasels)
+exten =&gt; 999,3,Wait(10)
+exten =&gt; 999,4,Hangup</pre>
+</div>
+<p>Now, run the &#8220;rasterisk&#8221; command and type:</p>
+<div class="highlight-python"><pre>sip reload
+dialplan reload</pre>
+</div>
+<p>Asterisk should now be using TLS for message passing. Note that the stream itself is not yet encrypted.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installingasterisk.html"
+                        title="previous chapter">Installing and configuring a basic Asterisk server</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02_asterisksflphone/configureasteriskencryption.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installingasterisk.html" title="Installing and configuring a basic Asterisk server"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

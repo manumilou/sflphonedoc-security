@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring Freeswitch security &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Setup a secure environment with Freeswitch" href="index.html" />
+    <link rel="next" title="Configuring SFLphone security" href="configuringsflphonesecurity.html" />
+    <link rel="prev" title="Installing Freeswitch" href="installingfreeswitch.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuringsflphonesecurity.html" title="Configuring SFLphone security"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installingfreeswitch.html" title="Installing Freeswitch"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Setup a secure environment with Freeswitch</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring-freeswitch-security">
+<span id="configurefreeswitchencryption"></span><h1>Configuring Freeswitch security<a class="headerlink" href="#configuring-freeswitch-security" title="Permalink to this headline">¶</a></h1>
+<p>To have an overview of SIP security, please read &#8212;&#8212;&#8212;TODO add the link&#8212;&#8212;&#8212;</p>
+<div class="highlight-python"><pre>cd /usr/local/freeswitch/bin
+sudo ./gentls_cert setup -cn 127.0.0.1 -alt DNS:localhost -org 127.0.0.1
+sudo ./gentls_cert create_server -cn 127.0.0.1 -alt DNS:localhost -org 127.0.0.1</pre>
+</div>
+<p>This will generate a self signed certificate in /usr/local/freeswitch/conf/ssl/CA/cakey.pem. Self signed certificates are not entirely secure and void the chain of trust. If you want care about security, please generate a certificate signed by an authority.</p>
+<p>Now, in <em>/usr/local/freeswitch/conf/vars.xml</em>, enable TLS:</p>
+<p><strong>Original:</strong></p>
+<p>&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;sip_tls_version=tlsv1&#8221;/&gt;</p>
+<p>&lt;!&#8211; Internal SIP Profile &#8211;&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_auth_calls=true&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_sip_port=5060&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_tls_port=5061&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_ssl_enable=false&#8221;/&gt;</p>
+<p>&lt;!&#8211; External SIP Profile &#8211;&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_auth_calls=false&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_sip_port=5080&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_tls_port=5081&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_ssl_enable=false&#8221;/&gt;</p>
+<p><strong>New:</strong></p>
+<p>&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;sip_tls_version=tlsv1&#8221;/&gt;</p>
+<p>&lt;!&#8211; Internal SIP Profile &#8211;&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_auth_calls=true&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_sip_port=5060&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_tls_port=5061&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_ssl_enable=true&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;internal_ssl_dir=$${base_dir}/conf/ssl&#8221;/&gt;</p>
+<p>&lt;!&#8211; External SIP Profile &#8211;&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_auth_calls=false&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_sip_port=5080&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_tls_port=5081&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_ssl_enable=true&#8221;/&gt;
+&lt;X-PRE-PROCESS cmd=&#8221;set&#8221; data=&#8221;external_ssl_dir=$${base_dir}/conf/ssl&#8221;/&gt;</p>
+<p>Now, in the freeswitch shell, execute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reloadxml</span>
+</pre></div>
+</div>
+<p>Back in <em>/usr/local/freeswitch/bin</em>, it is now time to create certificate for users:</p>
+<div class="highlight-python"><pre>sudo ./gentls_cert create_client -cn 1002 -out 1002.pem</pre>
+</div>
+<p>Be sure to copy/scp the following certificates to all relevants users.</p>
+<p>Now, lets take a step back. This how to is always using the same computer as server and client for simplicity purpose. In a real context, this will rarely be the case. So you will have to safely upload the certificates to the client computer. To do this, the &#8220;scp&#8221; command allow you to create an encrypted upload of the key, thus, invulnerable to man in the middle attack. In this case, you can copy them using &#8220;cp&#8221; as it doesn&#8217;t change anything.</p>
+<div class="highlight-python"><pre>scp /usr/local/freeswitch/conf/ssl/CA/cacert.pem username@hostname:/home/username/
+scp /usr/local/freeswitch/conf/ssl/agent.pem username@hostname:/home/username/</pre>
+</div>
+<p>If you use an alternate upload method, please double check if the target file owned by the same used as the sflphone process (usually your current username) and have &#8220;600&#8221; permissions. The &#8220;scp&#8221; lines will automatically do that for you.</p>
+<div class="section" id="optional">
+<h2>Optional:<a class="headerlink" href="#optional" title="Permalink to this headline">¶</a></h2>
+<p>In this how-to, we run FreeSwitch as root. This, of course, as FreeSwitch is a network facing application, is a potential attack vector. If you change freeswitch user, do not forget to use:</p>
+<div class="highlight-python"><pre>cd /usr/local/freeswitch/
+find -iname conf/ssl/ | xargs chown myfreeswitchuser:myfreeswitchuser</pre>
+</div>
+<p>Reference: <a class="reference external" href="http://wiki.freeswitch.org/wiki/SIP_TLS">http://wiki.freeswitch.org/wiki/SIP_TLS</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring Freeswitch security</a><ul>
+<li><a class="reference internal" href="#optional">Optional:</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installingfreeswitch.html"
+                        title="previous chapter">Installing Freeswitch</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuringsflphonesecurity.html"
+                        title="next chapter">Configuring SFLphone security</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03_freeswitchsflphone/configurefreeswitchencryption.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configuringsflphonesecurity.html" title="Configuring SFLphone security"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installingfreeswitch.html" title="Installing Freeswitch"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Setup a secure environment with Freeswitch</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

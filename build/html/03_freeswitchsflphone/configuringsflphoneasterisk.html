@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring SFLphone with Asterisk &mdash; SFLphone 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SFLphone 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Setup a secure environment with Asterisk" href="index.html" />
+    <link rel="next" title="Configuring SFLphone security" href="configuringsflphonesecurity.html" />
+    <link rel="prev" title="Configuring Asterisk encryption" href="configureasteriskencryption.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuringsflphonesecurity.html" title="Configuring SFLphone security"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configureasteriskencryption.html" title="Configuring Asterisk encryption"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring-sflphone-with-asterisk">
+<span id="configuringsflphoneasterisk"></span><h1>Configuring SFLphone with Asterisk<a class="headerlink" href="#configuring-sflphone-with-asterisk" title="Permalink to this headline">¶</a></h1>
+<p>Once this is done, execute &#8220;sflphone-client-gnome&#8221;. A configuration wizard will launch. Input these values:</p>
+<ul class="simple">
+<li>Register an Existing SIP or IAX2 account</li>
+<li>Next</li>
+<li>SIP</li>
+<li>Next</li>
+<li>Alias: MyFirstAccount</li>
+<li>Hostname: &lt;your asterisk server IP (use &#8220;ifconfig&#8221; on the server to check)&gt;</li>
+<li>Username: 666</li>
+<li>Password: 123</li>
+<li>Next</li>
+<li>Apply</li>
+</ul>
+<p>If you go in Edit -&gt; Account, you should now see &#8220;MyFirstAccount&#8221; as &#8220;REGISTERED&#8221; (in green). If you see &#8220;Trying...&#8221; and run Asterisk on the same computer as SFLphone, you have to change the default port in the advanced settings (Edit-&gt;Accounts-&gt;Select your account-&gt;Edit-&gt;Advanced)</p>
+<a class="reference internal image-reference" href="../_images/sflphone7_2.png"><img alt="../_images/sflphone7_2.png" src="../_images/sflphone7_2.png" style="width: 449.65px; height: 625.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/sflphone8_0.png"><img alt="../_images/sflphone8_0.png" src="../_images/sflphone8_0.png" style="width: 408.0px; height: 507.45px;" /></a>
+<a class="reference internal image-reference" href="../_images/sflphone9.png"><img alt="../_images/sflphone9.png" src="../_images/sflphone9.png" style="width: 308.55px; height: 598.4px;" /></a>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configureasteriskencryption.html"
+                        title="previous chapter">Configuring Asterisk encryption</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuringsflphonesecurity.html"
+                        title="next chapter">Configuring SFLphone security</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03_freeswitchsflphone/configuringsflphoneasterisk.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configuringsflphonesecurity.html" title="Configuring SFLphone security"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configureasteriskencryption.html" title="Configuring Asterisk encryption"
+             >previous</a> |</li>
+        <li><a href="../index.html">SFLphone 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Setup a secure environment with Asterisk</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Savoir-faire Linux Inc.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
