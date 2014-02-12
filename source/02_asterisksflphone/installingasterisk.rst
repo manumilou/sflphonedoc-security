@@ -6,6 +6,7 @@ Set up a basic Asterisk server
 .. important::
 
  **Prerequisites:**  an Ubuntu server or virtual machine
+
  **Outcome:** a basic SIP server with 2 accounts
 
 Install Asterisk
