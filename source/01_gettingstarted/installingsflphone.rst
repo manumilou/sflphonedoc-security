@@ -14,9 +14,11 @@ Solution 1: Software Center
 
 * Open Software Center (in Unity, press the ``Windows`` key and type `software center`)
 
-.. image:: /_static/softwarecenter0.png
+.. figure:: /_static/softwarecenter0.png
   :scale: 75%
   :align: center
+
+  Ubuntu Software Center.
 
 
 * In ``Edit > Software`` sources, select the *Other software* tab
@@ -51,7 +53,7 @@ You can now install the latest SFLphone version:
 Solution 3: Building from sources (not recommended)
 -----------
 
-Please refer to the instructions at https://projects.savoirfairelinux.com/projects/sflphone/wiki/How_to_build to build SFLphone from source.
+Please refer to the instructions `here <https://projects.savoirfairelinux.com/projects/sflphone/wiki/How_to_build>`_ to build SFLphone from source.
 
 
 

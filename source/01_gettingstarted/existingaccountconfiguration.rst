@@ -13,8 +13,11 @@ The simplest way to configure SFLphone is to use the *First Run* wizard.
 
  You can always return to the installation wizard in SFLphone by clicking the menu ``Call > Configuration Assistant``
 
-.. image:: /_static/accountwizard.png
+.. figure:: /_static/accountwizard.png
   :scale: 65%
+  :align: center
+
+  Account configuration wizard: first step.
 
 
 Account
@@ -22,8 +25,11 @@ Account
 
 Select ``Register an existing SIP or IAX2 account``
 
-.. image:: /_static/accounttype.png
+.. figure:: /_static/accounttype.png
   :scale: 75%
+  :align: center
+
+  Account configuration wizard: Account window.
 
 
 VoIP Protocols
@@ -31,8 +37,11 @@ VoIP Protocols
 
 You can select here the communication protocol to use to make calls (if unsure, use SIP).
 
-.. image:: /_static/voipprotocols.png
+.. figure:: /_static/voipprotocols.png
   :scale: 75%
+  :align: center
+
+  Account configuration wizard: VoIP Protocols window.
 
 
 Account settings
@@ -41,12 +50,14 @@ Account settings
 This step allows you to set up your account, by specifying the hostname, username, password, ...
 
 
-.. image:: /_static/accountsettings.png
+.. figure:: /_static/accountsettings.png
   :scale: 75%
+  :align: center
+
+  Account configuration wizard: Account settings.
 
 
-
-Fields list:
+Here are the details of each settings: 
 
 .. _Nomenclature-table:
 
@@ -64,9 +75,14 @@ Secure communications with ZRTP     Do not check (see security section)
 
 Press ``Continue`` and ``Apply`` when you are ready to register your account.
 
-.. image:: /_static/accountregistration.png
+.. figure:: /_static/accountregistration.png
+  :scale: 75%
+  :align: center
 
-Accout registration
+  Account configuration wizard: Review
+
+
+Account registration
 ~~~~~~~~~~~~~~~~~~~
 
 The last panel displays an overview of your account settings. You may now click on ``Close``, as the installation wizard is finishow now. 
