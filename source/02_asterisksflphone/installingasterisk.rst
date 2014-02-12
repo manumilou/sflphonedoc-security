@@ -19,7 +19,7 @@ Install `Asterisk <http://asterisk.org>`_ with apt-get:
 
 It will ask you for a country code, you can check http://countrycode.org/ to get yours. 
 
-You can check if Asterisk is operational using:
+You can check if `Asterisk <http://asterisk.org>`_ is operational using:
 
 ::
 
