@@ -1,4 +1,3 @@
-sflphonedoc-security
+Secure your calls with SFLphone
 ====================
 
-SFLphone doc: Security
