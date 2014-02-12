@@ -6,7 +6,17 @@
 How to setup a secure SIP environment with SFLphone
 ====================================
 
-Contents:
+.. image:: /_static/logo.png
+   :align: center
+
+**SFLphone is a robust, standards-compliant enterprise softphone, for desktop and embedded systems. 
+It is designed to handle several hundred calls a day. 
+SFLphone is available under the GNU GPL license, version 3.**
+
+Please visit the official website for a complete list of features: http://sflphone.org.
+
+Contents
+--------
 
 .. toctree::
   :maxdepth: 2
@@ -17,7 +27,7 @@ Contents:
 
 
 Indices and tables
-==================
+-----------------
 
 * :ref:`genindex`
 * :ref:`modindex`

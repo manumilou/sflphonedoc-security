@@ -3,29 +3,37 @@
 Configuring Asterisk encryption
 ==============================
 
-In this part, we will use TLS to encrypt the streams.
+In this part, we will use `TLS <http://en.wikipedia.org/wiki/Transport_Layer_Security>`_ to **encrypt the data streams**.
 
 ::
 
+ # Operate as root to install openssl
  sudo su -
  apt-get install openssl
+
+ # Create the directory and get a certificate
  mkdir /etc/certs
  cd /etc/certs/
  wget https://raw.github.com/rillian/asterisk-opus/master/contrib/scripts/ast_tls_cert
  sh ast_tls_cert -C pbx.MyHostName -O "NSA proof(?) server" -d /etc/certs/
- #Now fill out the form.
+
+ # Now fill out the form.
  sh ast_tls_cert -m client -c /etc/certs/ca.crt -k /etc/certs/ca.key -C mynsauser.MyHostName -O "NSA proof(?) server" -d /etc/certs -o mynsauser
  chown asterisk:asterisk ./ -R
  ls
 
-Now, let's take a step back. This howto has assumed the same computer as server and client for simplicity's sake. In a real-world context, this will rarely be the case. So you will have to safely upload the certificates to the client computer. To do this, the "scp" command allows you to upload the key over an encrypted connection. In our case, you can simply copy them using "cp" as it doesn't change anything.
+
+.. note::
+
+  This *How-To* has assumed the same computer as server and client for simplicity's sake. In a real-world context, this will rarely be the case. So you will have to safely upload the certificates to the client computer. To do this, the ``scp`` command allows you to upload the key over an encrypted connection. In our case, you can simply copy them using ``cp`` as it doesn't change anything.
+
 
 ::
 
  scp mynsauser.pem username@hostname:/tmp/
  scp ca.crt username@hostname:/tmp/
 
-Now, Asterisk need to be configured to use this certificate for encrypted calls. Backup your current /etc/asterisk/sip.conf, then open sip.conf and replace its contents with:
+Now, `Asterisk <http://asterisk.org>`_ need to be configured to use this certificate for encrypted calls. Backup your current :file:`/etc/asterisk/sip.conf`, then open :file:`sip.conf` and replace its contents with:
 
 ::
 
@@ -92,7 +100,7 @@ Now, Asterisk need to be configured to use this certificate for encrypted calls.
  ;insecure = invite,port
  nat = yes
 
-And in extensions.conf, in the "[local]" section, add:
+And in :file:`extensions.conf`, in the *[local]* section, add:
 
 ::
 
@@ -101,11 +109,15 @@ And in extensions.conf, in the "[local]" section, add:
  exten => 999,3,Wait(10)
  exten => 999,4,Hangup
 
-Now, run the "rasterisk" command and type:
+Now, run the ``rasterisk`` command and type:
 
 ::
 
  sip reload
  dialplan reload
 
-Asterisk should now be using TLS for message passing. Note that the stream itself is not yet encrypted.
+`Asterisk <http://asterisk.org>`_ should now be using `TLS <http://en.wikipedia.org/wiki/Transport_Layer_Security>`_ for message passing. 
+
+.. warning::
+
+ The stream itself is not yet encrypted, only the SIP messages are.

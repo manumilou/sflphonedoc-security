@@ -1,20 +1,25 @@
 .. _installingasterisk:
 
-Installing and configuring a basic Asterisk server
-==================================
+Set up a basic Asterisk server
+=================================================
 
 **Prerequisites:**  an Ubuntu server or virtual machine
 
 **Outcome:** a basic SIP server with 2 accounts
 
-Install Asterisk with apt-get:
+Install Asterisk
+----------------
+
+Install `Asterisk <http://asterisk.org>`_ with apt-get:
 
 ::
 
  sudo su
  apt-get install asterisk 
 
-It will ask you for a country code, you can check http://countrycode.org/ to get yours. You can check if Asterisk is operational using:
+It will ask you for a country code, you can check http://countrycode.org/ to get yours. 
+
+You can check if Asterisk is operational using:
 
 ::
 
@@ -23,10 +28,13 @@ It will ask you for a country code, you can check http://countrycode.org/ to get
 .. image:: /_static/asterisk1.png
   :scale: 75%
 
-Add some SIP accounts
----------------------
+Basic configuration
+--------------------
 
-Now, using your favourite text editor, make a backup of /etc/asterisk/sip.conf and replace it with:
+Add SIP accounts
+~~~~~~~~~~~~~~~~~~~~~
+
+Now, using your favourite text editor, make a backup of :file:`/etc/asterisk/sip.conf` and replace it with:
 
 ::
 
@@ -61,13 +69,13 @@ Now, using your favourite text editor, make a backup of /etc/asterisk/sip.conf a
  context=internal
 
 
-Be sure to update "localnet" to match your network settings.
-Run ifconfig to check your public IP address:
+Be sure to update `localnet` to match your network settings.
+Run ``ifconfig`` command to check your public IP address:
 
 .. image:: /_static/asterisk2.png
   :scale: 75%
 
-To apply the settings, execute "rasterisk" and type:
+To apply the settings, execute ``rasterisk`` and type:
 
 ::
 
@@ -83,7 +91,10 @@ To confirm the new diaplan, run:
 .. image:: /_static/asterisk3.png
   :scale: 75%
 
-Now, setup a new dialplan to be able to call other users. Edit /etc/asterisk/extensions.conf and add: 
+Dialplan
+~~~~~~~~
+
+Now, setup a new dialplan to be able to call other users. Edit :file:`/etc/asterisk/extensions.conf` and add the following lines: 
 
 ::
 
